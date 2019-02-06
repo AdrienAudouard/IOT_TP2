@@ -3,13 +3,11 @@ const bodyParser = require('body-parser');
 const router = require('./routes/router.js');
 const mongoose = require('mongoose');
 const resources = require('./utils/resources');
-const User = require('./models/user');
-const QueryCache = require('./models/query-cache');
 
 
 const PORT = process.env.PORT || 5000;
 
-const dbURL = resources.env == 'development' ? 'mongodb://localhost:27017/stats' : process.env['MONGODB_URI'];
+const dbURL = resources.env == 'development' ? 'mongodb://localhost:27017/arduino' : process.env['MONGODB_URI'];
 
 console.log('dbURL: ' + dbURL);
 
