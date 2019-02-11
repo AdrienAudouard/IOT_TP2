@@ -25,6 +25,11 @@ export class DashboardService {
 
   getLatestLum() {
     const url = `${environment.apiUrl}/lumiere/latest`;
-    return this.httpClient.post(url, {value: false});
+    return this.httpClient.get(url);
+  }
+
+  getLums(count: number = 20) {
+    const url = `${environment.apiUrl}/lumiere?count=${count}`;
+    return this.httpClient.get(url);
   }
 }

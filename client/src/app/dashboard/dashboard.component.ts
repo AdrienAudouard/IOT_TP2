@@ -3,8 +3,8 @@ import * as Chartist from 'chartist';
 import { DashboardService } from './dashboard.service';
 import { Observable, interval } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
-
-declare var $:any;
+import { DatePipe } from '@angular/common';
+import { LedStatePipe } from './led-sate.pipe';
 
 @Component({
     selector: 'dashboard-cmp',
@@ -14,61 +14,20 @@ declare var $:any;
 
 export class DashboardComponent implements OnInit {
   public lightState = '';
-  public latestLum = '';
+  public latestLum = { value: '', date: '' };
   public lumLoop: any;
+  public lumChart: any;
+
   constructor(public dashboardService: DashboardService) {
 
   }
 
-    ngOnInit(){
-      this.dashboardService.getLightState().subscribe((response: any) => {
-        console.log(response);
-        this.lightState = response;
-      }, (err: any) => {
-        console.log(err);
-      });
+    ngOnInit() {
+      this.updateLightState();
 
-      this.lumLoop = interval(10000).subscribe(() => {
-        this.dashboardService.getLatestLum().subscribe((lum: any) => {
-          this.latestLum = lum.result.value;
-        });
-      });
+      this.getLastLumValue();
 
-        var dataSales = {
-          labels: ['9:00AM', '12:00AM', '3:00PM', '6:00PM', '9:00PM', '12:00PM', '3:00AM', '6:00AM'],
-          series: [
-             [287, 385, 490, 562, 594, 626, 698, 895, 952],
-            [67, 152, 193, 240, 387, 435, 535, 642, 744],
-            [23, 113, 67, 108, 190, 239, 307, 410, 410]
-          ]
-        };
-
-        var optionsSales = {
-          low: 0,
-          high: 1000,
-          showArea: true,
-          height: "245px",
-          axisX: {
-            showGrid: false,
-          },
-          lineSmooth: Chartist.Interpolation.simple({
-            divisor: 3
-          }),
-          showLine: true,
-          showPoint: false,
-        };
-
-        var responsiveSales: any[] = [
-          ['screen and (max-width: 640px)', {
-            axisX: {
-              labelInterpolationFnc: function (value) {
-                return value[0];
-              }
-            }
-          }]
-        ];
-
-        new Chartist.Line('#chartHours', dataSales, optionsSales, responsiveSales);
+      this.upateLumValueGraph();
 
 
         var data = {
@@ -124,6 +83,77 @@ export class DashboardComponent implements OnInit {
           series: [62, 32, 6]
         });
     }
+
+    updateLightState() {
+      this.dashboardService.getLightState().subscribe((response: any) => {
+        console.log(response);
+        this.lightState = response;
+      }, (err: any) => {
+        console.log(err);
+      });
+    }
+
+    getLastLumValue() {
+      this.lumLoop = interval(1000).subscribe(() => {
+        this.dashboardService.getLatestLum().subscribe((lum: any) => {
+          console.log(lum);
+          this.latestLum.value = lum.result.lumiere;
+          this.latestLum.date = lum.result.date;
+        });
+      });
+    }
+
+    upateLumValueGraph() {
+      this.dashboardService.getLums().subscribe((res: any) => {
+        let high = 0;
+        const values = [];
+        const labels = [];
+
+        for (const lum of res.result) {
+          let datePipe = new DatePipe('en-US');
+
+          values.push(lum.lumiere);
+          labels.push(datePipe.transform(lum.date, 'short'));
+
+          if (lum.lumiere > high) {
+            high = lum.lumiere;
+          }
+        }
+
+        const options = {
+          low: 0,
+          high: high + 500,
+          showArea: true,
+          height: '245px',
+          axisX: {
+            showGrid: false,
+          },
+          lineSmooth: Chartist.Interpolation.simple({
+            divisor: 3
+          }),
+          showLine: true,
+          showPoint: false,
+        };
+
+        const datas = {
+          labels,
+          series: [values]
+        };
+
+        const responsive: any[] = [
+          ['screen and (max-width: 3000px)', {
+            axisX: {
+              labelInterpolationFnc(value: string, index: number) {
+                return index % 4 === 0 ? value : null;
+              }
+            }
+          }]
+        ];
+
+        this.lumChart = new Chartist.Line('#chartHours', datas, options, responsive);
+      });
+    }
+
 
     turnOnLight() {
       this.dashboardService.turnOnLight().subscribe((response: any) => {

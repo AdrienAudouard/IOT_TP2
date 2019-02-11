@@ -10,16 +10,17 @@ import { NavbarModule} from './shared/navbar/navbar.module';
 import { FixedPluginModule} from './shared/fixedplugin/fixedplugin.module';
 import { NguiMapModule} from '@ngui/map';
 
-import { DashboardComponent }   from './dashboard/dashboard.component';
-import { UserComponent }   from './user/user.component';
-import { TableComponent }   from './table/table.component';
-import { TypographyComponent }   from './typography/typography.component';
-import { IconsComponent }   from './icons/icons.component';
-import { MapsComponent }   from './maps/maps.component';
-import { NotificationsComponent }   from './notifications/notifications.component';
-import { UpgradeComponent }   from './upgrade/upgrade.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { UserComponent } from './user/user.component';
+import { TableComponent } from './table/table.component';
+import { TypographyComponent } from './typography/typography.component';
+import { IconsComponent } from './icons/icons.component';
+import { MapsComponent } from './maps/maps.component';
+import { NotificationsComponent } from './notifications/notifications.component';
+import { UpgradeComponent } from './upgrade/upgrade.component';
 import { DashboardService } from './dashboard/dashboard.service';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { LedStatePipe } from './dashboard/led-sate.pipe';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
     IconsComponent,
     MapsComponent,
     NotificationsComponent,
-    UpgradeComponent
+    UpgradeComponent,
+    LedStatePipe,
   ],
   imports: [
     BrowserModule,
@@ -49,6 +51,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
     DashboardService,
     HttpClientModule
   ],
+  exports: [LedStatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
