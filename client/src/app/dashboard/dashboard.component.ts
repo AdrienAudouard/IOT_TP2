@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as Chartist from 'chartist';
 import { DashboardService } from './dashboard.service';
+import { Observable, interval } from 'rxjs';
+import { takeWhile } from 'rxjs/operators';
 
 declare var $:any;
 
@@ -12,7 +14,8 @@ declare var $:any;
 
 export class DashboardComponent implements OnInit {
   public lightState = '';
-
+  public latestLum = '';
+  public lumLoop: any;
   constructor(public dashboardService: DashboardService) {
 
   }
@@ -24,6 +27,13 @@ export class DashboardComponent implements OnInit {
       }, (err: any) => {
         console.log(err);
       });
+
+      this.lumLoop = interval(10000).subscribe(() => {
+        this.dashboardService.getLatestLum().subscribe((lum: any) => {
+          this.latestLum = lum.result.value;
+        });
+      });
+
         var dataSales = {
           labels: ['9:00AM', '12:00AM', '3:00PM', '6:00PM', '9:00PM', '12:00PM', '3:00AM', '6:00AM'],
           series: [
@@ -114,4 +124,21 @@ export class DashboardComponent implements OnInit {
           series: [62, 32, 6]
         });
     }
-}
+
+    turnOnLight() {
+      this.dashboardService.turnOnLight().subscribe((response: any) => {
+        this.lightState = response;
+      }, (err) => {
+        console.log(err);
+      });
+    }
+
+    turnOffLight() {
+      this.dashboardService.turnOffLight().subscribe((response: any) => {
+        this.lightState = response;
+      }, (err) => {
+        console.log(err);
+      });
+    }
+
+  }

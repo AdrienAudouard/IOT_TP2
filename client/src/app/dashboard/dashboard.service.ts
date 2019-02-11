@@ -12,4 +12,19 @@ export class DashboardService {
     const url = `${environment.apiUrl}/led_state`;
     return this.httpClient.get(url);
   }
+
+  turnOnLight() {
+    const url = `${environment.apiUrl}/led_state`;
+    return this.httpClient.post(url, {value: true});
+  }
+
+  turnOffLight() {
+    const url = `${environment.apiUrl}/led_state`;
+    return this.httpClient.post(url, {value: false});
+  }
+
+  getLatestLum() {
+    const url = `${environment.apiUrl}/lumiere/latest`;
+    return this.httpClient.post(url, {value: false});
+  }
 }
