@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 5000;
 const dbURL = resources.env == 'development' ? 'mongodb://localhost:27017/arduino' : process.env['MONGODB_URI'];
 
 console.log('dbURL: ' + dbURL);
+console.log('port:' + PORT);
 
 mongoose.connect(dbURL);
 
