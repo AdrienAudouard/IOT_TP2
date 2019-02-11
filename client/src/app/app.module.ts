@@ -18,6 +18,8 @@ import { IconsComponent }   from './icons/icons.component';
 import { MapsComponent }   from './maps/maps.component';
 import { NotificationsComponent }   from './notifications/notifications.component';
 import { UpgradeComponent }   from './upgrade/upgrade.component';
+import { DashboardService } from './dashboard/dashboard.service';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -36,13 +38,17 @@ import { UpgradeComponent }   from './upgrade/upgrade.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     SidebarModule,
     NavbarModule,
     FooterModule,
     FixedPluginModule,
     NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=YOUR_KEY_HERE'})
   ],
-  providers: [],
+  providers: [
+    DashboardService,
+    HttpClientModule
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

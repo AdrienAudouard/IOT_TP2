@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as Chartist from 'chartist';
+import { DashboardService } from './dashboard.service';
 
 declare var $:any;
 
@@ -9,8 +10,20 @@ declare var $:any;
     templateUrl: 'dashboard.component.html'
 })
 
-export class DashboardComponent implements OnInit{
+export class DashboardComponent implements OnInit {
+  public lightState = '';
+
+  constructor(public dashboardService: DashboardService) {
+
+  }
+
     ngOnInit(){
+      this.dashboardService.getLightState().subscribe((response: any) => {
+        console.log(response);
+        this.lightState = response;
+      }, (err: any) => {
+        console.log(err);
+      });
         var dataSales = {
           labels: ['9:00AM', '12:00AM', '3:00PM', '6:00PM', '9:00PM', '12:00PM', '3:00AM', '6:00AM'],
           series: [
