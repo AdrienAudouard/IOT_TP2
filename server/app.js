@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 5000;
 
 const dbURL = resources.env == 'development' ? 'mongodb://localhost:27017/arduino' : process.env['MONGODB_URI'];
 
-const ALLOWED_METHOD = ["POST", "GET", "PUT", "DELETE"];
+const ALLOWED_METHOD = ["POST", "GET", "PUT", "DELETE", "OPTIONS"];
 
 console.log('dbURL: ' + dbURL);
 console.log('port:' + PORT);
