@@ -30,7 +30,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // This header can be a security breach: https://github.com/nasa/openmct/issues/1036
 app.disable('x-powered-by');
 
-
 app.use((req, res, next) => {
   req.setTimeout(300000);
 
@@ -56,6 +55,8 @@ app.use((req, res, next) => {
     res.status(405).send({success: false, message: `Method ${req.method} not allowed`});
   }
 });
+
+app.options('*', (req, res, next) => { res.status(200).send({success: true}) });
 
 app.use('/auth', router);
 app.use('/api', secureRouter);
