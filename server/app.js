@@ -56,7 +56,7 @@ app.use((req, res, next) => {
 })
 
 app.use('/api', router);
-app.use('/api', router);
+app.use('/api', secureRouter);
 
 app.use((req, res, next) => {
   res.status(404).send({success: false, message: '404 not found'});
