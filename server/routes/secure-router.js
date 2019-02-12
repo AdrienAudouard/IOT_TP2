@@ -37,5 +37,6 @@ router.get('/lumiere', LumiereController.get);
 router.get('/lumiere/latest', LumiereController.latest);
 router.get('/led_state', LedStateController.get);
 router.put('/led_state', LedStateController.put);
+router.post('/led_state', LedStateController.put);
 
 module.exports =  router;
