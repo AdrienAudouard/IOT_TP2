@@ -36,7 +36,8 @@ app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
-
+  res.header('Access-Control-Max-Age', '86400');
+  
   const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   const method = req.method;
   const url = req.url;
