@@ -27,8 +27,6 @@ class LumiereController {
   put(req, res) {
     const value = req.body;
 
-    console.log(value);
-
     Lumiere.create({lumiere : value.lumiere}).then((lum) => {
       res.status(200).send({success: true, result: lum});
     }).catch((err) => {

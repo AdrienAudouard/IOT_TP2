@@ -19,23 +19,14 @@ router.use((req, res, next) => {
         return;
     }
 
-    ApiKey.findOne({ key: apiKey }).then((result) => {
-        if (result === null) {
-            res.status(401).send({ success: false, message: 'Wrong api key.' });    
-        } else {
-            next();
-        }
-        // Api key exist
-    }, (err) => {
-        //Api key do not exist
-        console.log(err);
-        res.status(401).send({ success: false, message: 'Wrong api key.' });
-    });
+    res.status(401).send({ success: false, message: 'Wrong api key.' });
 });
 
 router.get('/lumiere', LumiereController.get);
 router.get('/lumiere/latest', LumiereController.latest);
 router.get('/led_state', LedStateController.get);
+router.post('/lumiere', LumiereController.put);
+router.post('/led_state', LedStateController.put);
 router.put('/led_state', LedStateController.put);
 
 module.exports =  router;

@@ -2,16 +2,18 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
+const resources = require('./utils/resources');
 const router = require('./routes/router.js');
 const secureRouter = require('./routes/secure-router');
-const mongoose = require('mongoose');
-const resources = require('./utils/resources');
+const objectRouter = require('./routes/object-router');
 
 const PORT = process.env.PORT || 5000;
 
 const dbURL = resources.env == 'development' ? 'mongodb://localhost:27017/arduino' : process.env['MONGODB_URI'];
 
-const ALLOWED_METHOD = ["POST", "GET", "PUT"];
+const ALLOWED_METHOD = ["POST", "GET", "PUT", "DELETE"];
 
 console.log('dbURL: ' + dbURL);
 console.log('port:' + PORT);
@@ -53,10 +55,11 @@ app.use((req, res, next) => {
   } else {
     res.status(405).send({success: false, message: `Method ${req.method} not allowed`});
   }
-})
+});
 
-app.use('/api', router);
+app.use('/auth', router);
 app.use('/api', secureRouter);
+app.use('/api', objectRouter);
 
 app.use((req, res, next) => {
   res.status(404).send({success: false, message: '404 not found'});
