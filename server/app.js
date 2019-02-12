@@ -1,9 +1,10 @@
+// https://expressjs.com/fr/advanced/best-practice-security.html
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const router = require('./routes/router.js');
 const mongoose = require('mongoose');
 const resources = require('./utils/resources');
-
 
 const PORT = process.env.PORT || 5000;
 
@@ -22,6 +23,11 @@ const app = express();
 // Parse incoming requests data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+// This header can be a security breach: https://github.com/nasa/openmct/issues/1036
+app.disable('x-powered-by');
+
+
 app.use((req, res, next) => {
   req.setTimeout(300000);
 
@@ -41,7 +47,6 @@ app.use((req, res, next) => {
 });
 
 app.use((req, res, next) => {
-  console.log(req.method);
   if (ALLOWED_METHOD.includes(req.method)) {
     next();
   } else {
