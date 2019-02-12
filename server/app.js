@@ -1,9 +1,8 @@
 // https://expressjs.com/fr/advanced/best-practice-security.html
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-
+const broker = require('./broker/broker');
 const resources = require('./utils/resources');
 const router = require('./routes/router.js');
 const secureRouter = require('./routes/secure-router');
@@ -15,8 +14,7 @@ const dbURL = resources.env == 'development' ? 'mongodb://localhost:27017/arduin
 
 const ALLOWED_METHOD = ["POST", "GET", "PUT", "DELETE", "OPTIONS"];
 
-console.log('dbURL: ' + dbURL);
-console.log('port:' + PORT);
+broker.start();
 
 mongoose.connect(dbURL);
 
