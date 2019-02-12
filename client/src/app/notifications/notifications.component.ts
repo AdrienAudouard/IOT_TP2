@@ -8,11 +8,11 @@ declare var $:any;
     templateUrl: 'notifications.component.html'
 })
 
-export class NotificationsComponent{
-    showNotification(from, align){
-        var type = ['','info','success','warning','danger'];
+export class NotificationsComponent {
+    showNotification(from, align) {
+        const type = ['', 'info', 'success', 'warning', 'danger'];
 
-        var color = Math.floor((Math.random() * 4) + 1);
+        const color = Math.floor((Math.random() * 4) + 1);
 
     	$.notify({
         	icon: "ti-gift",

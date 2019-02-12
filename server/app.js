@@ -9,6 +9,8 @@ const PORT = process.env.PORT || 5000;
 
 const dbURL = resources.env == 'development' ? 'mongodb://localhost:27017/arduino' : process.env['MONGODB_URI'];
 
+const ALLOWED_METHOD = ["POST", "GET", "PUT"];
+
 console.log('dbURL: ' + dbURL);
 console.log('port:' + PORT);
 
@@ -37,6 +39,15 @@ app.use((req, res, next) => {
   console.log();
   next();
 });
+
+app.use((req, res, next) => {
+  console.log(req.method);
+  if (ALLOWED_METHOD.includes(req.method)) {
+    next();
+  } else {
+    res.status(405).send({success: false, message: `Method ${req.method} not allowed`});
+  }
+})
 
 app.use('/api', router);
 

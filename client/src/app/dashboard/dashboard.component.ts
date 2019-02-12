@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as Chartist from 'chartist';
 import { DashboardService } from './dashboard.service';
-import { Observable, interval } from 'rxjs';
-import { takeWhile } from 'rxjs/operators';
+import { interval } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { LedStatePipe } from './led-sate.pipe';
 
@@ -110,7 +109,7 @@ export class DashboardComponent implements OnInit {
         const labels = [];
 
         for (const lum of res.result) {
-          let datePipe = new DatePipe('en-US');
+          const datePipe = new DatePipe('en-US');
 
           values.push(lum.lumiere);
           labels.push(datePipe.transform(lum.date, 'short'));
@@ -132,7 +131,7 @@ export class DashboardComponent implements OnInit {
             divisor: 3
           }),
           showLine: true,
-          showPoint: false,
+          showPoint: true,
         };
 
         const datas = {
