@@ -4,7 +4,7 @@ const LedStateController = require('../controllers/led_state_controller');
 const router = express.Router();
 
 router.use((req, res, next) => {
-    const apiKey =req.header['x-api-key'];
+    const apiKey = req.headers['x-api-key'];
 
     // No api key in headers
     if (!apiKey) {
