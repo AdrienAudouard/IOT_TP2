@@ -7,7 +7,7 @@ const resources = require('../utils/resources');
 const router = express.Router();
 
 router.use((req, res, next) => {
-    const apiKey = req.headers['x-api-key'];
+    const apiKey = req.headers['Authorization'];
 
     // No api key in headers
     if (!apiKey) {
