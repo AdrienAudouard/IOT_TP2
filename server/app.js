@@ -34,7 +34,7 @@ app.use((req, res, next) => {
   req.setTimeout(300000);
 
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-api-key");
   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
   
   const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
