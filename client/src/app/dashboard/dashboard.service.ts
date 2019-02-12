@@ -2,9 +2,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 
-
 @Injectable()
 export class DashboardService {
+  httpOptions = { headers: new HttpHeaders({ 'x-api-key':  environment.apiKey })};
 
   constructor(public httpClient: HttpClient) { }
 

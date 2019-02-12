@@ -19,8 +19,9 @@ import { MapsComponent } from './maps/maps.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { UpgradeComponent } from './upgrade/upgrade.component';
 import { DashboardService } from './dashboard/dashboard.service';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LedStatePipe } from './dashboard/led-sate.pipe';
+import { TokenInterceptor } from './token.interceptor';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,12 @@ import { LedStatePipe } from './dashboard/led-sate.pipe';
   ],
   providers: [
     DashboardService,
-    HttpClientModule
+    HttpClientModule,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
   ],
   exports: [LedStatePipe],
   bootstrap: [AppComponent]

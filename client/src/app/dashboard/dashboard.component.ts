@@ -93,7 +93,7 @@ export class DashboardComponent implements OnInit {
     }
 
     getLastLumValue() {
-      this.lumLoop = interval(1000).subscribe(() => {
+      this.lumLoop = interval(10000).subscribe(() => {
         this.dashboardService.getLatestLum().subscribe((lum: any) => {
           console.log(lum);
           this.latestLum.value = lum.result.lumiere;
