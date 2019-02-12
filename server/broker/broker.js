@@ -1,18 +1,22 @@
-const mosca = require('mosca');
-
+const mqtt = require('mqtt');
+const url = require('url');
+// Parse
+const mqtt_url = url.parse(process.env.CLOUDMQTT_URL || 'mqtt://localhost:1883');
+const auth = (mqtt_url.auth || ':').split(':');
 
 class Broker {
     start() {
-        const settings = { port:1883 };
-        this.server = new mosca.Server(settings);
-
-        this.server.on('ready', function(){
-            console.log(`mqtt running on port ${1883}`)
+        this.client = mqtt.connect(mqtt_url);
+        this.client.on('connect', () => {
+            this.client.subscribe('myTopic');
+            console.log('mqtt connected to: ' + mqtt_url);
         });
+
+        this.client.on('message', function (topic, message) {
+            let context = message.toString();
+            console.log(context)
+        })
     }
 }
 
 module.exports = new Broker();
-
-
-
