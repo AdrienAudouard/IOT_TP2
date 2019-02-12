@@ -3,6 +3,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const router = require('./routes/router.js');
+const secureRouter = require('./routes/secure-router');
 const mongoose = require('mongoose');
 const resources = require('./utils/resources');
 
@@ -54,6 +55,7 @@ app.use((req, res, next) => {
   }
 })
 
+app.use('/api', router);
 app.use('/api', router);
 
 app.use((req, res, next) => {
