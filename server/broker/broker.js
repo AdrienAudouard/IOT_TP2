@@ -18,7 +18,7 @@ class Broker {
             this.client.subscribe('lum');
         });
 
-        this.client.on('message', function (topic, message) {
+        this.client.on('message', (topic, message) => {
             console.log('---- New MQTT Message:'+ topic +' ----')
             console.log(JSON.stringify(message));
             console.log('--------------------------------');
