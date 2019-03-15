@@ -12,6 +12,7 @@ class Broker {
 
         this.client = mqtt.connect(mqtt_url);
         this.client.on('connect', () => {
+          console.log('connected');
             this.client.subscribe('led');
             this.client.subscribe('temp');
             this.client.subscribe('lum');
