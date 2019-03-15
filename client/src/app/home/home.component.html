@@ -1,3 +1,25 @@
-<p>
-  home works!
-</p>
+<div class="container-fluid">
+  <div class="row">
+    <h1 class="text-center">Arduino Dashboard</h1>
+  </div>
+
+  <a href="" [routerLink]="['/http']">
+      <div class="row">
+          <div class="card" style="margin-left: 10%; margin-right: 10%; height: 150px; margin-top: 50px">
+              <div class="card-body" style="height: 150px">
+                <p class="card-text text-center" style="height: 150px; line-height: 150px">HTTP Dashboard</p>
+              </div>
+            </div>
+      </div>
+  </a>
+
+  <a href="" [routerLink]="['/mqtt']">
+    <div class="row">
+        <div class="card" style="margin-left: 10%; margin-right: 10%; height: 150px;">
+            <div class="card-body" style="height: 150px">
+              <p class="card-text text-center" style="height: 150px; line-height: 150px">MQTT Dashboard</p>
+            </div>
+          </div>
+    </div>
+  </a>
+</div>

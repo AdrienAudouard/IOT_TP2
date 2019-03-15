@@ -14,7 +14,7 @@ export class FixedPluginComponent implements OnInit{
         var $off_canvas_sidebar = $('.off-canvas-sidebar');
         var window_width = $(window).width();
 
-        if(window_width > 767){
+        if( window_width > 767 ){
             if($('.fixed-plugin .dropdown').hasClass('show-dropdown')){
                 $('.fixed-plugin .dropdown').addClass('open');
             }

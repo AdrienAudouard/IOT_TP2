@@ -7,7 +7,6 @@ const resources = require('./utils/resources');
 const router = require('./routes/router.js');
 const secureRouter = require('./routes/secure-router');
 const objectRouter = require('./routes/object-router');
-
 const PORT = process.env.PORT || 5000;
 
 const dbURL = resources.env == 'development' ? 'mongodb://localhost:27017/arduino' : process.env['MONGODB_URI'];
