@@ -9,10 +9,12 @@ class Broker {
     start() {
         console.log('====== MQTT SERVER URL: ======');
         console.log(JSON.stringify(mqtt_url));
-        
+
         this.client = mqtt.connect(mqtt_url);
         this.client.on('connect', () => {
-            this.client.subscribe('myTopic');
+            this.client.subscribe('led');
+            this.client.subscribe('temp');
+            this.client.subscribe('lum');
         });
 
         this.client.on('message', function (topic, message) {
