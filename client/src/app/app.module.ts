@@ -22,6 +22,18 @@ import { DashboardService } from './dashboard/dashboard.service';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LedStatePipe } from './dashboard/led-sate.pipe';
 import { TokenInterceptor } from './token.interceptor';
+import { DashboardMqttComponent } from './dashboard-mqtt/dashboard-mqtt.component';
+import {
+  MqttModule,
+  IMqttServiceOptions
+} from 'ngx-mqtt';
+import { DashboardMqttService } from './dashboard-mqtt/dashboard-mqtt.service';
+
+export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
+  hostname: 'm24.cloudmqtt.com',
+  port: 18060,
+  connectOnCreate: false,
+};
 
 @NgModule({
   declarations: [
@@ -37,6 +49,7 @@ import { TokenInterceptor } from './token.interceptor';
     NotificationsComponent,
     UpgradeComponent,
     LedStatePipe,
+    DashboardMqttComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,10 +59,12 @@ import { TokenInterceptor } from './token.interceptor';
     NavbarModule,
     FooterModule,
     FixedPluginModule,
+    MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
     NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=YOUR_KEY_HERE'})
   ],
   providers: [
     DashboardService,
+    DashboardMqttService,
     HttpClientModule,
     {
       provide: HTTP_INTERCEPTORS,

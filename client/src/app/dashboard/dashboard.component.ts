@@ -27,60 +27,6 @@ export class DashboardComponent implements OnInit {
       this.getLastLumValue();
 
       this.upateLumValueGraph();
-
-
-        var data = {
-          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-          series: [
-            [542, 543, 520, 680, 653, 753, 326, 434, 568, 610, 756, 895],
-            [230, 293, 380, 480, 503, 553, 600, 664, 698, 710, 736, 795]
-          ]
-        };
-
-        var options = {
-            seriesBarDistance: 10,
-            axisX: {
-                showGrid: false
-            },
-            height: "245px"
-        };
-
-        var responsiveOptions: any[] = [
-          ['screen and (max-width: 640px)', {
-            seriesBarDistance: 5,
-            axisX: {
-              labelInterpolationFnc: function (value) {
-                return value[0];
-              }
-            }
-          }]
-        ];
-
-        new Chartist.Line('#chartActivity', data, options, responsiveOptions);
-
-        var dataPreferences = {
-            series: [
-                [25, 30, 20, 25]
-            ]
-        };
-
-        var optionsPreferences = {
-            donut: true,
-            donutWidth: 40,
-            startAngle: 0,
-            total: 100,
-            showLabel: false,
-            axisX: {
-                showGrid: false
-            }
-        };
-
-        new Chartist.Pie('#chartPreferences', dataPreferences, optionsPreferences);
-
-        new Chartist.Pie('#chartPreferences', {
-          labels: ['62%','32%','6%'],
-          series: [62, 32, 6]
-        });
     }
 
     updateLightState() {
@@ -93,7 +39,7 @@ export class DashboardComponent implements OnInit {
     }
 
     getLastLumValue() {
-      this.lumLoop = interval(10000).subscribe(() => {
+      this.lumLoop = interval(1000).subscribe(() => {
         this.dashboardService.getLatestLum().subscribe((lum: any) => {
           console.log(lum);
           this.latestLum.value = lum.result.lumiere;

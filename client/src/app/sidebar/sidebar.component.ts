@@ -9,8 +9,8 @@ export interface RouteInfo {
 
 export const ROUTES: RouteInfo[] = [
     { path: 'home', title: 'Home',  icon: 'ti-panel', class: '' },
-    { path: 'http', title: 'HTTP Dashboard',  icon:'ti-user', class: '' },
-    { path: 'mqtt', title: 'MQTT dashboard',  icon:'ti-view-list-alt', class: '' },
+    { path: 'http', title: 'HTTP Dashboard',  icon: 'ti-user', class: '' },
+    { path: 'mqtt', title: 'MQTT dashboard',  icon: 'ti-view-list-alt', class: '' },
 ];
 
 @Component({
