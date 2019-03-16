@@ -13,15 +13,21 @@ export class DashboardMqttComponent implements OnInit {
   public latestLum = { value: '', date: '' };
   public lumLoop: any;
   public lumChart: any;
+  public lums: any[];
 
-  constructor(public dashboardService: DashboardMqttService) { }
+  constructor(public dashboardService: DashboardMqttService) {
+    this.lums = new Array();
+  }
 
   ngOnInit() {
     this.updateLightState();
 
     this.getLastLumValue();
 
-    this.upateLumValueGraph();
+    this.dashboardService.getLums().subscribe((res: any) => {
+      this.lums = res.result;
+      this.upateLumValueGraph();
+    });
   }
 
   updateLightState() {
@@ -38,58 +44,59 @@ export class DashboardMqttComponent implements OnInit {
       console.log(lum);
       this.latestLum.value = lum.lumiere;
       this.latestLum.date = lum.date;
+
+      this.lums.push(JSON.parse(JSON.stringify(this.latestLum)));
+      this.upateLumValueGraph();
     });
   }
 
   upateLumValueGraph() {
-    this.dashboardService.getLums().subscribe((res: any) => {
-      let high = 0;
-      const values = [];
-      const labels = [];
+    let high = 0;
+    const values = [];
+    const labels = [];
 
-      for (const lum of res.result) {
-        const datePipe = new DatePipe('en-US');
+    for (const lum of this.lums) {
+      const datePipe = new DatePipe('en-US');
 
-        values.push(lum.lumiere);
-        labels.push(datePipe.transform(lum.date, 'short'));
+      values.push(lum.lumiere);
+      labels.push(datePipe.transform(lum.date, 'short'));
 
-        if (lum.lumiere > high) {
-          high = lum.lumiere;
-        }
+      if (lum.lumiere > high) {
+        high = lum.lumiere;
       }
+    }
 
-      const options = {
-        low: 0,
-        high: high + 500,
-        showArea: true,
-        height: '245px',
+    const options = {
+      low: 0,
+      high: high + 500,
+      showArea: true,
+      height: '245px',
+      axisX: {
+        showGrid: false,
+      },
+      lineSmooth: Chartist.Interpolation.simple({
+        divisor: 3
+      }),
+      showLine: true,
+      showPoint: true,
+    };
+
+    const datas = {
+      labels,
+      series: [values]
+    };
+
+    const responsive: any[] = [
+      ['screen and (max-width: 3000px)', {
         axisX: {
-          showGrid: false,
-        },
-        lineSmooth: Chartist.Interpolation.simple({
-          divisor: 3
-        }),
-        showLine: true,
-        showPoint: true,
-      };
-
-      const datas = {
-        labels,
-        series: [values]
-      };
-
-      const responsive: any[] = [
-        ['screen and (max-width: 3000px)', {
-          axisX: {
-            labelInterpolationFnc(value: string, index: number) {
-              return index % 4 === 0 ? value : null;
-            }
+          labelInterpolationFnc(value: string, index: number) {
+            return index % 4 === 0 ? value : null;
           }
-        }]
-      ];
+        }
+      }]
+    ];
 
-      this.lumChart = new Chartist.Line('#chartHours', datas, options, responsive);
-    });
+    this.lumChart = new Chartist.Line('#chartHours', datas, options, responsive);
   }
 
 

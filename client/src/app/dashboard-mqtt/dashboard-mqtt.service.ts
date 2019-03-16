@@ -49,8 +49,9 @@ export class DashboardMqttService {
       this.lumSubscription = this.mqttService.observe('lum').subscribe((message: IMqttMessage) => {
         console.log('New lum received');
         console.log(JSON.stringify(message));
+        console.log(JSON.stringify(message.payload.toString()));
 
-        observer.next({ lumiere: message.payload, date: new Date().getMilliseconds() });
+        observer.next({ lumiere: message.payload.toString(), date: new Date().getMilliseconds() });
       });
     });
   }

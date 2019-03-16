@@ -35,7 +35,7 @@ class Broker {
 
     ledMessage(message) {
         const query = {};
-        const update = { value: message.toString()};
+        const update = { value: message.data.toString()};
         const options = { upsert: true, new: true, setDefaultsOnInsert: true };
 
         LedState.updateOne(query, update, options).then(() => {
@@ -52,7 +52,7 @@ class Broker {
     }
 
     lumMessage(message) {
-        const value = message.toString();
+        const value = message.data.toString();
 
         Lumiere.create({lumiere : value.lumiere}).then((lum) => {
           res.status(200).send({success: true, result: lum});
