@@ -20,7 +20,7 @@ class Broker {
 
         this.client.on('message', (topic, message) => {
             console.log('---- New MQTT Message:'+ topic +' ----')
-            console.log(JSON.stringify(message));
+            console.log(JSON.stringify(message.toString()));
             console.log('--------------------------------');
 
             if (topic === 'led') {
@@ -35,7 +35,7 @@ class Broker {
 
     ledMessage(message) {
         const query = {};
-        const update = { value: message.data.toString()};
+        const update = { value: message.toString()};
         const options = { upsert: true, new: true, setDefaultsOnInsert: true };
 
         LedState.updateOne(query, update, options).then(() => {
