@@ -16,6 +16,7 @@ import {
 export class DashboardMqttService {
   private httpOptions = { headers: new HttpHeaders({ 'x-api-key':  environment.apiKey })};
   private lumSubscription: Subscription;
+  private tempSubscription: Subscription;
   private ledSubscription: Subscription;
 
   constructor(public httpClient: HttpClient,
@@ -51,7 +52,19 @@ export class DashboardMqttService {
         console.log(JSON.stringify(message));
         console.log(JSON.stringify(message.payload.toString()));
 
-        observer.next({ lumiere: parseInt(message.payload.toString()), date: new Date().getMilliseconds() });
+        observer.next({ lumiere: parseInt(message.payload.toString()), date: Date.now() });
+      });
+    });
+  }
+
+  getLatestTemp(): Observable<any> {
+    return new Observable(observer => {
+      this.tempSubscription = this.mqttService.observe('temp').subscribe((message: IMqttMessage) => {
+        console.log('New temp received');
+        console.log(JSON.stringify(message));
+        console.log(JSON.stringify(message.payload.toString()));
+
+        observer.next({ temp: parseInt(message.payload.toString()), date: Date.now() });
       });
     });
   }
