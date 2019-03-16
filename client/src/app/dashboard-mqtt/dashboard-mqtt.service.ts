@@ -51,7 +51,7 @@ export class DashboardMqttService {
         console.log(JSON.stringify(message));
         console.log(JSON.stringify(message.payload.toString()));
 
-        observer.next({ lumiere: message.payload.toString(), date: new Date().getMilliseconds() });
+        observer.next({ lumiere: parseInt(message.payload.toString()), date: new Date().getMilliseconds() });
       });
     });
   }

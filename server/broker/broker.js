@@ -52,9 +52,9 @@ class Broker {
     }
 
     lumMessage(message) {
-        const value = message.data.toString();
+        const value = parseInt(message.toString());
 
-        Lumiere.create({lumiere : value.lumiere}).then((lum) => {
+        Lumiere.create({lumiere : value}).then((lum) => {
           res.status(200).send({success: true, result: lum});
         }).catch((err) => {
           res.status(400).send({success: false, err});
