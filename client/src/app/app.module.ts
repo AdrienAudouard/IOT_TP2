@@ -25,15 +25,23 @@ import { TokenInterceptor } from './token.interceptor';
 import { DashboardMqttComponent } from './dashboard-mqtt/dashboard-mqtt.component';
 import {
   MqttModule,
+  MqttService,
   IMqttServiceOptions
 } from 'ngx-mqtt';
 import { DashboardMqttService } from './dashboard-mqtt/dashboard-mqtt.service';
 
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   hostname: 'm24.cloudmqtt.com',
-  port: 18060,
-  connectOnCreate: false,
+  port: 38060,
+  connectOnCreate: true,
+  protocol: 'wss',
+  username: 'jpuqjxky',
+  password: 'AtH50qUjgJjR'
 };
+
+export function mqttServiceFactory() {
+  return new MqttService(MQTT_SERVICE_OPTIONS);
+}
 
 @NgModule({
   declarations: [

@@ -20,7 +20,7 @@ export class DashboardMqttService {
 
   constructor(public httpClient: HttpClient,
               public mqttService: MqttService) {
-                mqttService.connect({username: 'jpuqjxky', password: 'AtH50qUjgJjR'});
+                //mqttService.connect({username: 'jpuqjxky', password: 'AtH50qUjgJjR'});
   }
 
   getLightState() {
@@ -29,11 +29,19 @@ export class DashboardMqttService {
   }
 
   turnOnLight() {
-    this.mqttService.publish('led', 'true');
+    this.mqttService.publish('led', 'true').subscribe(() => {
+      console.log('led turned on');
+    }, (err) => {
+      console.log(JSON.stringify(err));
+    });
   }
 
   turnOffLight() {
-    this.mqttService.publish('led', 'true');
+    this.mqttService.publish('led', 'false').subscribe(() => {
+      console.log('led turned false');
+    }, (err) => {
+      console.log(JSON.stringify(err));
+    });
   }
 
   getLatestLum(): Observable<any> {

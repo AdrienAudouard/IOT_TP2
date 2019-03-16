@@ -9,7 +9,7 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./dashboard-mqtt.component.scss']
 })
 export class DashboardMqttComponent implements OnInit {
-  public lightState = '';
+  public lightState = false;
   public latestLum = { value: '', date: '' };
   public lumLoop: any;
   public lumChart: any;
@@ -95,11 +95,11 @@ export class DashboardMqttComponent implements OnInit {
 
   turnOnLight() {
     this.dashboardService.turnOnLight();
-    this.lightState = 'true';
+    this.lightState = true;
   }
 
   turnOffLight() {
     this.dashboardService.turnOffLight();
-    this.lightState = 'false';
+    this.lightState = false;
   }
 }
