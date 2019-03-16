@@ -55,9 +55,9 @@ class Broker {
         const value = parseInt(message.toString());
 
         Lumiere.create({lumiere : value}).then((lum) => {
-          res.status(200).send({success: true, result: lum});
+          console.log('New lum added: ' + lum);
         }).catch((err) => {
-          res.status(400).send({success: false, err});
+          console.log(err);
         });
     }
 }
