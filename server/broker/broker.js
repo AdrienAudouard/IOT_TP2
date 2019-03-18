@@ -2,6 +2,8 @@ const mqtt = require('mqtt');
 const url = require('url');
 const LedState = require('../models/led_state');
 const Lumiere = require('../models/lumiere');
+const Temp = require('../models/temperature');
+
 // Parse
 const mqtt_url = url.parse(process.env.CLOUDMQTT_URL || 'mqtt://localhost:1883');
 
@@ -48,7 +50,13 @@ class Broker {
     }
 
     tempMessage(message) {
+      const value = parseInt(message.toString());
 
+      Temperature.create({temperature : value}).then((temp) => {
+        console.log('New lum added: ' + temp);
+      }).catch((err) => {
+        console.log(err);
+      });
     }
 
     lumMessage(message) {

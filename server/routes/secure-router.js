@@ -1,6 +1,7 @@
 const express = require('express');
 const LumiereController = require('../controllers/lumiere_controller');
 const LedStateController = require('../controllers/led_state_controller');
+const TemperatureController = require('../controllers/temperature_controller');
 const ApiKey = require('../models/api-key');
 const resources = require('../utils/resources');
 
@@ -38,5 +39,8 @@ router.get('/lumiere/latest', LumiereController.latest);
 router.get('/led_state', LedStateController.get);
 router.put('/led_state', LedStateController.put);
 router.post('/led_state', LedStateController.put);
+router.get('/temperature', TemperatureController.get);
+router.get('/temperature/latest', TemperatureController.latest);
+router.post('/temperature', TemperatureController.put);
 
 module.exports =  router;
