@@ -66,7 +66,7 @@ Il est possible de supprimer une clé d'api en faisant la requete suivante :
 * **get: api/lumiere** -> Obtenir toute les valeurs de lumiere
 * **get: api/lumiere/latest** -> Obtenir la derniere valeur insérée dans la BD
 * **post: api/lumiere** -> Ajoute une valeur de lumière dans la BD, le body de la requete doit contenir la paramètre 'lumiere'
-* * **get: api/temperature** -> Obtenir toute les valeurs de temperature
+* **get: api/temperature** -> Obtenir toute les valeurs de temperature
 * **get: api/temperature/latest** -> Obtenir la derniere valeur insérée dans la BD
 * **post: api/temperature** -> Ajoute une valeur de temperature dans la BD, le body de la requete doit contenir la paramètre 'temperature'
 
