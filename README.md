@@ -11,14 +11,29 @@ Pour notre par, la led était située sur la broche D23 et le capteur de tempér
 
 ### Arduino - Code HTTP
 
-* **print_ip_status()**
-* **connect_wifi() : connexion via ssid & password à un réseau en wifi**
-* **updateLed() : Début d'une liaison d'écoute avec le serveur qui va checker (requete GET) notre api, ici pour l'état de la led. On lui passe un header dans l'entête puis on démarre la connection HTTP. Cette fonction est le résultat du changement de l'état de la led (alumée ou éteinte). En fonction de ce que le serveur retourne, la led subira la modification du message via la réponse http.**
-* **sendTempValue() : Fonction qui va poster (requête POST) la valeur du capteur de temperature passée en paramètre à l'appel de la fonction.**
-* **sendSensorValue() : Fonction qui va poster (requête POST) la valeur du capteur de luminosité passée en paramètre à l'appel de la fonction. **
-* **loop() : boucle qui va se déclancher toutes les secondes et réexécuter le code qu'elle contient. Elle va notamment récupérer les valeurs de l'ESP32 des capteurs de température et de luminosité puis appeler les fonctions sendTempValue(), sendSensorValue().**
+Les lignes importantes::
+* **connect_wifi() :** Connexion via ssid & password à un réseau en wifi
+* **updateLed() :** Début d'une liaison d'écoute avec le serveur qui va checker (requete GET) notre api, ici pour l'état de la led. On lui passe un header dans l'entête puis on démarre la connection HTTP. Cette fonction est le résultat du changement de l'état de la led (alumée ou éteinte). En fonction de ce que le serveur retourne, la led subira la modification du message via la réponse http.
+* **sendTempValue() :** Fonction qui va poster (requête POST) la valeur du capteur de temperature passée en paramètre à l'appel de la fonction.
+* **sendSensorValue() :** Fonction qui va poster (requête POST) la valeur du capteur de luminosité passée en paramètre à l'appel de la fonction.
+* **loop() :** Boucle qui va se déclancher toutes les secondes et réexécuter le code qu'elle contient. Elle va notamment récupérer les valeurs de l'ESP32 des capteurs de température et de luminosité puis appeler les fonctions sendTempValue(), sendSensorValue().
 
 ### Arduino - Code MQTT
+
+Les lignes importantes::
+On définit nos topics auxquels nous allons nous subscribe ou publish:
+#define TOPIC_TEMP "temp"
+#define TOPIC_LED  "led"
+#define TOPIC_LIGHT  "lum"
+
+* **connect_wifi() :** Meme système d'accès wifi vu dans le modèle HTTP précédent.
+* **mqtt_mysubscribe :** Fonction qui va vérifier (toutes les 5 secondes), si le client n'est toujours pas connecté, s'il ne l'est toujours pas, on fait une tentative de connexion via **client.connect()**. Ce dernier passe en paramètre une valeur lambda ainsi que l'username et le mot de passe du mqtt broker. Puis on souscrit à un topic, celui de la led (de son état).
+* **set_LED :** Setteur qui va simplement envoyer l'information (allumer(high) ou eteindre(low)).
+* **loop() :** On récupère les valeurs du capteur de températures(**t = tempSensor.getTempCByIndex(0))** mais aussi celles du capteur de lumière **(sensorValue = analogRead (A0))**.  
+Chacunes de ces valeurs seront castées de float à string via la fc dtostrf() qui prend en premier paramètre, une valeur(Double), puis en second paramètre, une taille d'une chaine cible. En troisième paramètre, le nombre de chiffre après la virgule et enfin en quatrième paramètre, un tableau contant la chaine de caractère (tempString[] et sensorString[]).
+Pour finir, des deux côtés, on publiera ces valeurs au broker via ex: **client.publish(TOPIC_TEMP, tempString)**
+
+
 
 ### Le serveur
 
