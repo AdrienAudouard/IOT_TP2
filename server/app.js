@@ -24,6 +24,8 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use(express.static('public'));
+
 // This header can be a security breach: https://github.com/nasa/openmct/issues/1036
 app.disable('x-powered-by');
 
