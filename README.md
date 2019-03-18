@@ -47,6 +47,37 @@ La première fois que l'on veut accèder au client le chargement peut être long
 
 L'api est disponible à l'adresse suivante: https://arduino-miage.herokuapp.com/api
 
+## Api du serveur 
+
+### Clé d'API
+Pour accéder à l'api une clé est nécssaire. Pour la générer, il faut faire une requete à l'adresse suivante:
+
+**post: auth/api_key** -> Retourne une clé d'api valide.
+
+La clé doit être placée dans le header de toute les requêtes dans la valeur "x-api-key".
+
+Il est possible de supprimer une clé d'api en faisant la requete suivante :
+
+**post: auth/delete** -> Supprimer la clé d'api passé en paramètre via le champ "key".
+
+### Routes
+* **get: api/lumiere** -> Obtenir toute les valeurs de lumiere
+* **get: api/lumiere/latest** -> Obtenir la derniere valeur insérée dans la BD
+* **post: api/lumiere** -> Ajoute une valeur de lumière dans la BD, le body de la requete doit contenir la paramètre 'lumiere'
+* * **get: api/temperature** -> Obtenir toute les valeurs de temperature
+* **get: api/temperature/latest** -> Obtenir la derniere valeur insérée dans la BD
+* **post: api/temperature** -> Ajoute une valeur de temperature dans la BD, le body de la requete doit contenir la paramètre 'temperature'
+
+Si la requête est bien executée un code HTTP 200 avec la réponse est renvoyé sinon une erreur HTTP avec le code erreur correspondant est renvoyée.
+
+## Broker MQTT
+
+Pour utiliser MQTT nous avons utilisé un broker privé accessible ici:
+* **Server**: m24.cloudmqtt.com
+* **Port**: 18060
+* **Username**: jpuqjxky
+* **Password**: AtH50qUjgJjR
+
 ## Lancer le projet en local
 
 ### Installation 
@@ -106,34 +137,3 @@ Le client est disponible à l'adresse suivante: http://localhost:4200/
 
 Le client est fait pour fonctionner avec le server distant que nous avons hébergé sur Heroku à l'adresse suivante: https://arduino-miage.herokuapp.com  
 Il est possible de faire fonctionner le client avec un serveur local. Pour cela, dans le fichier **client/src/environments/environment.ts** il faut mettre le champ **'apiUrl'** à **'http://localhost:5000/api'**
-
-## Api du serveur 
-
-### Clé d'API
-Pour accéder à l'api une clé est nécssaire. Pour la générer, il faut faire une requete à l'adresse suivante:
-
-**post: auth/api_key** -> Retourne une clé d'api valide.
-
-La clé doit être placée dans le header de toute les requêtes dans la valeur "x-api-key".
-
-Il est possible de supprimer une clé d'api en faisant la requete suivante :
-
-**post: auth/delete** -> Supprimer la clé d'api passé en paramètre via le champ "key".
-
-### Routes
-* **get: api/lumiere** -> Obtenir toute les valeurs de lumiere
-* **get: api/lumiere/latest** -> Obtenir la derniere valeur insérée dans la BD
-* **post: api/lumiere** -> Ajoute une valeur de lumière dans la BD, le body de la requete doit contenir la paramètre 'lumiere'
-* * **get: api/temperature** -> Obtenir toute les valeurs de temperature
-* **get: api/temperature/latest** -> Obtenir la derniere valeur insérée dans la BD
-* **post: api/temperature** -> Ajoute une valeur de temperature dans la BD, le body de la requete doit contenir la paramètre 'temperature'
-
-Si la requête est bien executée un code HTTP 200 avec la réponse est renvoyé sinon une erreur HTTP avec le code erreur correspondant est renvoyée.
-
-## Broker MQTT
-
-Pour utiliser MQTT nous avons utilisé un broker privé accessible ici:
-* **Server**: m24.cloudmqtt.com
-* **Port**: 18060
-* **Username**: jpuqjxky
-* **Password**: AtH50qUjgJjR
