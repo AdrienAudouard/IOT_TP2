@@ -32,4 +32,14 @@ export class DashboardService {
     const url = `${environment.apiUrl}/lumiere?count=${count}`;
     return this.httpClient.get(url);
   }
+
+  getLatestTemp() {
+    const url = `${environment.apiUrl}/temperature/latest`;
+    return this.httpClient.get(url);
+  }
+
+  getTemps(count: number = 20) {
+    const url = `${environment.apiUrl}/temperature?count=${count}`;
+    return this.httpClient.get(url);
+  }
 }

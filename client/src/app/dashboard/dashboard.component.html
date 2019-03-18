@@ -37,14 +37,14 @@
                             <div class="col-xs-7">
                                 <div class="numbers">
                                     <p>Temperature</p>
-                                    $1,345
+                                    {{ latestTemp.value }}
                                 </div>
                             </div>
                         </div>
                         <div class="footer">
                             <hr />
                             <div class="stats">
-                                <i class="ti-relaof"></i> Last update:
+                              <i class="ti-reload"></i> Last update: {{ latestTemp.date | date:'short' }}
                             </div>
                         </div>
                     </div>
@@ -80,11 +80,10 @@
             </div>
         </div>
         <div class="row">
-
             <div class="col-md-12">
                 <div class="card">
                     <div class="header">
-                        <h4 class="title">Light sensor value</h4>
+                        <h4 class="title">Light sensor values</h4>
                         <p class="category">20 last values</p>
                     </div>
                     <div class="content">
@@ -102,4 +101,27 @@
                 </div>
             </div>
         </div>
+
+        <div class="row">
+          <div class="col-md-12">
+              <div class="card">
+                  <div class="header">
+                      <h4 class="title">Temperature sensor values</h4>
+                      <p class="category">20 last values</p>
+                  </div>
+                  <div class="content">
+                      <div id="chartTemps" class="ct-chart"></div>
+                      <div class="footer">
+                          <div class="chart-legend">
+                              <i class="fa fa-circle text-warning"></i> Temperature value in °C
+                          </div>
+                          <hr>
+                          <div class="stats">
+                              <i class="ti-reload"></i> Last update: {{ latestTemp.date | date:'short' }}
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
     </div>

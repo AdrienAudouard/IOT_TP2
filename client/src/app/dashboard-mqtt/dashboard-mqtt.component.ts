@@ -10,8 +10,8 @@ import { DatePipe } from '@angular/common';
 })
 export class DashboardMqttComponent implements OnInit {
   public lightState = false;
-  public latestLum = { value: '', date: '' };
-  public latestTemp = { value: '', date: '' };
+  public latestLum = { value: 'Unknow', date: '' };
+  public latestTemp = { value: 'Unknow', date: '' };
   public lumLoop: any;
   public lumChart: any;
   public lums: any[];
@@ -28,9 +28,18 @@ export class DashboardMqttComponent implements OnInit {
     this.getLastLumValue();
     this.getLastTempValue();
 
-    this.dashboardService.getLums().subscribe((res: any) => {
+    this.dashboardService.getLums(200).subscribe((res: any) => {
       this.lums = res.result;
+      this.latestLum.value = this.lums[0].lumiere;
+      this.latestLum.date = this.lums[0].date;
       this.upateLumValueGraph();
+    });
+
+    this.dashboardService.getTemps(200).subscribe((res: any) => {
+      this.temps = res.result;
+      this.latestTemp.value = this.temps[0].temperature + '°C';
+      this.latestTemp.date = this.temps[0].date;
+      this.upateTempValueGraph();
     });
   }
 
@@ -55,7 +64,7 @@ export class DashboardMqttComponent implements OnInit {
 
   getLastTempValue() {
     this.dashboardService.getLatestTemp().subscribe((temp: any) => {
-      this.latestTemp.value = temp.temp + '°C';
+      this.latestTemp.value = temp.temperature + '°C';
       this.latestTemp.date = temp.date;
 
       this.temps.unshift(JSON.parse(JSON.stringify(temp)));
@@ -91,55 +100,6 @@ export class DashboardMqttComponent implements OnInit {
 
     const options = {
       low: 0,
-      high: high + 5,
-      showArea: true,
-      height: '245px',
-      axisX: {
-        showGrid: false,
-      },
-      lineSmooth: Chartist.Interpolation.simple({
-        divisor: 3
-      }),
-      showLine: true,
-      showPoint: true,
-    };
-
-    const datas = {
-      labels,
-      series: [values]
-    };
-
-    const responsive: any[] = [
-      ['screen and (max-width: 3000px)', {
-        axisX: {
-          labelInterpolationFnc(value: string, index: number) {
-            return index % 4 === 0 ? value : null;
-          }
-        }
-      }]
-    ];
-
-    this.lumChart = new Chartist.Line('#chartHours', datas, options, responsive);
-  }
-
-  upateTempValueGraph() {
-    let high = 0;
-    const values = [];
-    const labels = [];
-
-    for (const temp of this.temps) {
-      const datePipe = new DatePipe('en-US');
-
-      values.push(temp.temp);
-      labels.push(datePipe.transform(temp.date, 'short'));
-
-      if (temp.temp > high) {
-        high = temp.temp;
-      }
-    }
-
-    const options = {
-      low: 0,
       high: high + 500,
       showArea: true,
       height: '245px',
@@ -162,7 +122,56 @@ export class DashboardMqttComponent implements OnInit {
       ['screen and (max-width: 3000px)', {
         axisX: {
           labelInterpolationFnc(value: string, index: number) {
-            return index % 4 === 0 ? value : null;
+            return index % 25 === 0 ? value : null;
+          }
+        }
+      }]
+    ];
+
+    this.lumChart = new Chartist.Line('#chartHours', datas, options, responsive);
+  }
+
+  upateTempValueGraph() {
+    let high = 0;
+    const values = [];
+    const labels = [];
+
+    for (const temp of this.temps) {
+      const datePipe = new DatePipe('en-US');
+
+      values.push(temp.temperature);
+      labels.push(datePipe.transform(temp.date, 'short'));
+
+      if (temp.temperature > high) {
+        high = temp.temperature;
+      }
+    }
+
+    const options = {
+      low: 0,
+      high: high + 5,
+      showArea: true,
+      height: '245px',
+      axisX: {
+        showGrid: false,
+      },
+      lineSmooth: Chartist.Interpolation.simple({
+        divisor: 3
+      }),
+      showLine: true,
+      showPoint: true,
+    };
+
+    const datas = {
+      labels,
+      series: [values]
+    };
+
+    const responsive: any[] = [
+      ['screen and (max-width: 3000px)', {
+        axisX: {
+          labelInterpolationFnc(value: string, index: number) {
+            return index % 25 === 0 ? value : null;
           }
         }
       }]

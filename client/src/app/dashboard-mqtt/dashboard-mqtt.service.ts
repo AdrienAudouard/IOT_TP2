@@ -64,13 +64,18 @@ export class DashboardMqttService {
         console.log(JSON.stringify(message));
         console.log(JSON.stringify(message.payload.toString()));
 
-        observer.next({ temp: parseInt(message.payload.toString()), date: Date.now() });
+        observer.next({ temperature: parseInt(message.payload.toString()), date: Date.now() });
       });
     });
   }
 
   getLums(count: number = 20) {
     const url = `${environment.apiUrl}/lumiere?count=${count}`;
+    return this.httpClient.get(url);
+  }
+
+  getTemps(count: number = 20) {
+    const url = `${environment.apiUrl}/temperature?count=${count}`;
     return this.httpClient.get(url);
   }
 }

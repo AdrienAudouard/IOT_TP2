@@ -13,9 +13,11 @@ import { LedStatePipe } from './led-sate.pipe';
 
 export class DashboardComponent implements OnInit {
   public lightState = '';
-  public latestLum = { value: '', date: '' };
+  public latestLum = { value: 'Unknow', date: '' };
+  public latestTemp = { value: 'Unknow', date: '' };
   public lumLoop: any;
   public lumChart: any;
+  public tempLoop: any;
 
   constructor(public dashboardService: DashboardService) {
 
@@ -25,13 +27,14 @@ export class DashboardComponent implements OnInit {
       this.updateLightState();
 
       this.getLastLumValue();
+      this.getLastTempValue();
 
       this.upateLumValueGraph();
+      this.upateTempValueGraph();
     }
 
     updateLightState() {
       this.dashboardService.getLightState().subscribe((response: any) => {
-        console.log(response);
         this.lightState = response;
       }, (err: any) => {
         console.log(err);
@@ -41,15 +44,74 @@ export class DashboardComponent implements OnInit {
     getLastLumValue() {
       this.lumLoop = interval(1000).subscribe(() => {
         this.dashboardService.getLatestLum().subscribe((lum: any) => {
-          console.log(lum);
           this.latestLum.value = lum.result.lumiere;
           this.latestLum.date = lum.result.date;
         });
       });
     }
 
+    getLastTempValue() {
+      this.tempLoop = interval(1000).subscribe(() => {
+        this.dashboardService.getLatestTemp().subscribe((lum: any) => {
+          this.latestTemp.value = lum.result.temperature + '°C';
+          this.latestTemp.date = lum.result.date;
+        });
+      });
+    }
+
+    upateTempValueGraph() {
+      this.dashboardService.getTemps(200).subscribe((res: any) => {
+        let high = 0;
+        const values = [];
+        const labels = [];
+
+        for (const temp of res.result) {
+          const datePipe = new DatePipe('en-US');
+
+          values.push(temp.temperature);
+          labels.push(datePipe.transform(temp.date, 'short'));
+
+          if (temp.temperature > high) {
+            high = temp.temperature;
+          }
+        }
+
+        const options = {
+          low: 0,
+          high: high + 5,
+          showArea: true,
+          height: '245px',
+          axisX: {
+            showGrid: false,
+          },
+          lineSmooth: Chartist.Interpolation.simple({
+            divisor: 3
+          }),
+          showLine: true,
+          showPoint: true,
+        };
+
+        const datas = {
+          labels,
+          series: [values]
+        };
+
+        const responsive: any[] = [
+          ['screen and (max-width: 3000px)', {
+            axisX: {
+              labelInterpolationFnc(value: string, index: number) {
+                return index % 25 === 0 ? value : null;
+              }
+            }
+          }]
+        ];
+
+        this.lumChart = new Chartist.Line('#chartTemps', datas, options, responsive);
+      });
+    }
+
     upateLumValueGraph() {
-      this.dashboardService.getLums().subscribe((res: any) => {
+      this.dashboardService.getLums(200).subscribe((res: any) => {
         let high = 0;
         const values = [];
         const labels = [];
@@ -89,7 +151,7 @@ export class DashboardComponent implements OnInit {
           ['screen and (max-width: 3000px)', {
             axisX: {
               labelInterpolationFnc(value: string, index: number) {
-                return index % 4 === 0 ? value : null;
+                return index % 25 === 0 ? value : null;
               }
             }
           }]
