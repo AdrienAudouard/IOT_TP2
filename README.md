@@ -38,7 +38,18 @@ On peut traduire le fonctionnement global du projet à travers le schema suivant
 
 ![Image of Yaktocat](./dg.png)
 
-## Lancer le serveur 
+## Utiliser le projet 
+
+Le projet est hébergé sur Heroku, un hebergement gratuit grâce au Github Student Pack.
+L'adresse est la suivante: https://arduino-miage.herokuapp.com
+
+La première fois que l'on veut accèder au client le chargement peut être long car le serveur sur lequel on héberge ce met en "pause" lorsqu'il ne recoit pas de requete pendant un certains temps.
+
+L'api est disponible à l'adresse suivante: https://arduino-miage.herokuapp.com/api
+
+## Lancer le projet en local
+
+### Installation 
 
 Pour pouvoir faire fonctionner notre projet, il faut installer MongoDB, node.JS et Angular.
 
@@ -46,22 +57,24 @@ MongoDB et node.JS sont nécessaires au fonctionnent du serveur.
 
 node.JS et Angular sont nécessaire au fonctionnement du client.
 
-### Installer MongoDB
+#### Installer MongoDB
 
 Sur **macOS**: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/  
 Sur **Windows**: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
 Sur **Linux**: https://docs.mongodb.com/manual/administration/install-on-linux/
 
-### Installer node.JS
+#### Installer node.JS
 
 https://nodejs.org/en/download/
 
-### Installer Angular
+#### Installer Angular
 
 Pour pouvoir installer Angular, il faut au préalable avoir installé node.JS:
 https://angular.io/guide/quickstart
 
-### Dans un premier terminal 
+### Lancer le projet
+
+#### Dans un premier terminal 
 
 Lancer la commande
 
@@ -71,7 +84,7 @@ mongod
 
 **Ne pas fermer ce terminal !**
 
-### Dans un second terminal
+#### Dans un second terminal
 Dans le dossier server:
 ```
 npm install
@@ -80,7 +93,7 @@ npm run dev
 
 Le serveur est disponible à l'adresse: http://localhost:5000
 
-## Lancer le client 
+#### Lancer le client 
 
 Dans le dossier "client" du projet, dans un terminal lancer les commandes
 
@@ -117,7 +130,7 @@ Il est possible de supprimer une clé d'api en faisant la requete suivante :
 
 Si la requête est bien executée un code HTTP 200 avec la réponse est renvoyé sinon une erreur HTTP avec le code erreur correspondant est renvoyée.
 
-### Broker MQTT
+## Broker MQTT
 
 Pour utiliser MQTT nous avons utilisé un broker privé accessible ici:
 * **Server**: m24.cloudmqtt.com
