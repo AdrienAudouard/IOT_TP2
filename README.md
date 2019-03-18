@@ -11,12 +11,12 @@ Pour notre par, la led était située sur la broche D23 et le capteur de tempér
 
 ### Arduino - Code HTTP
 
-print_ip_status()
-connect_wifi() : connexion via ssid & password à un réseau en wifi
-updateLed() : Début d'une liaison d'écoute avec le serveur qui va checker (requete GET) notre api, ici pour l'état de la led. On lui passe un header dans l'entête puis on démarre la connection HTTP. Cette fonction est le résultat du changement de l'état de la led (alumée ou éteinte). En fonction de ce que le serveur retourne, la led subira la modification du message via la réponse http.
-sendTempValue() : Fonction qui va poster (requête POST) la valeur du capteur de temperature passée en paramètre à l'appel de la fonction.
-sendSensorValue() : Fonction qui va poster (requête POST) la valeur du capteur de luminosité passée en paramètre à l'appel de la fonction. 
-loop() : boucle qui va se déclancher toutes les secondes et réexécuter le code qu'elle contient. Elle va notamment récupérer les valeurs de l'ESP32 des capteurs de température et de luminosité puis appeler les fonctions sendTempValue(), sendSensorValue().
+* **print_ip_status()**
+* **connect_wifi() : connexion via ssid & password à un réseau en wifi**
+* **updateLed() : Début d'une liaison d'écoute avec le serveur qui va checker (requete GET) notre api, ici pour l'état de la led. On lui passe un header dans l'entête puis on démarre la connection HTTP. Cette fonction est le résultat du changement de l'état de la led (alumée ou éteinte). En fonction de ce que le serveur retourne, la led subira la modification du message via la réponse http.**
+* **sendTempValue() : Fonction qui va poster (requête POST) la valeur du capteur de temperature passée en paramètre à l'appel de la fonction.**
+* **sendSensorValue() : Fonction qui va poster (requête POST) la valeur du capteur de luminosité passée en paramètre à l'appel de la fonction. **
+* **loop() : boucle qui va se déclancher toutes les secondes et réexécuter le code qu'elle contient. Elle va notamment récupérer les valeurs de l'ESP32 des capteurs de température et de luminosité puis appeler les fonctions sendTempValue(), sendSensorValue().**
 
 ### Arduino - Code MQTT
 
