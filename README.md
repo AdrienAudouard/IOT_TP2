@@ -2,6 +2,8 @@
 
 ## Fonctionnement du projet
 
+### L'ESP 32
+
 ### Le serveur
 
 Nous avons choisi de développer un serveur en node.JS. Nous avons fait ce choix car les serveurs node.JS sont rapides et simples à mettre en place.  
