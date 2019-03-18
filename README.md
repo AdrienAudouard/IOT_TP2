@@ -76,7 +76,7 @@ Si la requête est bien executée un code HTTP 200 avec la réponse est renvoyé
 
 Pour utiliser MQTT nous avons utilisé un broker privé accessible ici:
 * **Server**: m24.cloudmqtt.com
-* **Port**: 18060
+* **Port**: 38060
 * **Username**: jpuqjxky
 * **Password**: AtH50qUjgJjR
 
