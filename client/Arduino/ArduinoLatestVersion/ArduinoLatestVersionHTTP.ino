@@ -75,7 +75,7 @@ void setup () {
 
   // configure targeted server and url  
   pinMode( ledPin, OUTPUT);
-  // tempSensor.begin();
+  tempSensor.begin();
 }
 void sendTempValue(int value){
   HTTPClient serv;
@@ -83,7 +83,7 @@ void sendTempValue(int value){
   serv.begin(url_serv_name);
   serv.addHeader("Content-Type", "application/x-www-form-urlencoded");
   serv.addHeader("x-api-key", "1I^&g?pmyUn*;V$[y7yKk^jr:g~ZDn},G~_q!t^z2-{.84Roe`$%wStM?(%7sdW");
-  String postValue = "temerature="+ String(value);
+  String postValue = "temperature="+ String(value);
 
 // start connection and send HTTP header
   int HttpRetCode=serv.POST(postValue);
@@ -142,9 +142,9 @@ void loop() {
   
   Serial.print(sensorValue , DEC) ; // Prints the value to the serial port
   Serial.print("\n" );
-  // Serial.print("Temperature: ");
-  // Serial.print(t);
-  // Serial.print("C \n");
+  Serial.print("Temperature: ");
+  Serial.print(t);
+  Serial.print("C \n");
   
   delay(1000); // wait 1s for next reading
 }
