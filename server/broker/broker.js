@@ -2,7 +2,7 @@ const mqtt = require('mqtt');
 const url = require('url');
 const LedState = require('../models/led_state');
 const Lumiere = require('../models/lumiere');
-const Temp = require('../models/temperature');
+const Temperature = require('../models/temperature');
 
 // Parse
 const mqtt_url = url.parse(process.env.CLOUDMQTT_URL || 'mqtt://localhost:1883');
