@@ -19,7 +19,7 @@ Le routes qui permetent de modifier, ajouter et supprimer des données ne sont a
 ### Le broker MQTT
 
 Nous avons choisi un broker MQTT privé. Ce broker possède trois topics:
-* **led**: on y envoie le status de la LED, true pour l'allumer et false pour l'eteindre
+* **led**: on y envoie le status de la LED, true pour l'allumer et false pour l'éteindre
 * **lum**: l'esp 32 y envoie la valeur de son capteur de lumiere ;
 * **temp**: l'esp 32 y envoie la valeur de son capteur de temperature.
 
@@ -31,12 +31,12 @@ Le client Web a été développé avec Angular 7. Deux dashboards sont disponibl
 
 Le dashboard HTTP, où toutes les données sont récupérées via HTTP. Des requetes sont effectuées toutes les secondes pour actualiser les données.
 
-Le dashboard MQTT, il effectue dans un premier temps une requette HTTP pour initialiser les données sur l'interface. Ensuite il utilise MQTT pour les mettres à jour.
+Le dashboard MQTT, il effectue dans un premier temps une requête HTTP pour initialiser les données sur l'interface. Ensuite il utilise MQTT pour les mettres à jour.
 
 
 ### Fonctionnement global
 
-On peut traduire le fonctionnement global du projet à travers le schema suivant :
+On peut traduire le fonctionnement global du projet à travers le schéma suivant :
 
 ![Image of Yaktocat](./dg.png)
 
@@ -45,7 +45,7 @@ On peut traduire le fonctionnement global du projet à travers le schema suivant
 Le projet est hébergé sur Heroku, un hebergement gratuit grâce au Github Student Pack.
 L'adresse est la suivante: https://arduino-miage.herokuapp.com
 
-La première fois que l'on veut accèder au client le chargement peut être long car le serveur sur lequel on héberge ce met en "pause" lorsqu'il ne recoit pas de requete pendant un certains temps.
+La première fois que l'on veut accéder au client le chargement peut être long car le serveur sur lequel on héberge se met en "pause" lorsqu'il ne recoit pas de requete pendant un certain temps.
 
 L'api est disponible à l'adresse suivante: https://arduino-miage.herokuapp.com/api
 
@@ -76,7 +76,7 @@ Si la requête est bien executée un code HTTP 200 avec la réponse est renvoyé
 
 Pour utiliser MQTT nous avons utilisé un broker privé accessible ici:
 * **Server**: m24.cloudmqtt.com
-* **Port**: 38060
+* **Port**: 18060
 * **Username**: jpuqjxky
 * **Password**: AtH50qUjgJjR
 
@@ -137,5 +137,5 @@ npm run start
 
 Le client est disponible à l'adresse suivante: http://localhost:4200/
 
-Le client est fait pour fonctionner avec le server distant que nous avons hébergé sur Heroku à l'adresse suivante: https://arduino-miage.herokuapp.com  
+Le client est fait pour fonctionner avec le serveur distant que nous avons hébergé sur Heroku à l'adresse suivante: https://arduino-miage.herokuapp.com  
 Il est possible de faire fonctionner le client avec un serveur local. Pour cela, dans le fichier **client/src/environments/environment.ts** il faut mettre le champ **'apiUrl'** à **'http://localhost:5000/api'**
