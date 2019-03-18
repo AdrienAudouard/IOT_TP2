@@ -41,6 +41,5 @@ router.put('/led_state', LedStateController.put);
 router.post('/led_state', LedStateController.put);
 router.get('/temperature', TemperatureController.get);
 router.get('/temperature/latest', TemperatureController.latest);
-router.post('/temperature', TemperatureController.put);
 
 module.exports =  router;

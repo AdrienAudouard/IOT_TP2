@@ -1,4 +1,4 @@
-const Temperature = require('../models/lumiere');
+const Temperature = require('../models/temperature');
 
 class TemperatureController {
   get(req, res) {
