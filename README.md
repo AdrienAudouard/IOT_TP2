@@ -93,7 +93,7 @@ node.JS et Angular sont nécessaire au fonctionnement du client.
 #### Installer MongoDB
 
 Sur **macOS**: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/  
-Sur **Windows**: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
+Sur **Windows**: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/  
 Sur **Linux**: https://docs.mongodb.com/manual/administration/install-on-linux/
 
 #### Installer node.JS
